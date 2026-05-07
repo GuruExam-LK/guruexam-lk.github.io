@@ -3,121 +3,658 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>GuruExam - Sinhala Guru Exam Training App</title>
+  <meta name="description" content="GuruExam is a Sinhala Windows application for Sri Lankan Guru Exam preparation with GK, IQ, AI explanations and exam-style MCQs." />
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
       background: #f8fafc;
       color: #0f172a;
     }
 
-    .hero {
+    a {
+      text-decoration: none;
+    }
+
+    .page {
       min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.35), transparent 35%),
+        radial-gradient(circle at top right, rgba(168, 85, 247, 0.28), transparent 35%),
+        linear-gradient(135deg, #020617 0%, #0f172a 45%, #111827 100%);
+      color: white;
+      overflow: hidden;
+    }
+
+    .navbar {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.5px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #38bdf8, #8b5cf6);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
-      background: linear-gradient(135deg, #0f172a, #312e81);
-      color: white;
-      text-align: center;
+      font-weight: 900;
+      box-shadow: 0 14px 35px rgba(56, 189, 248, 0.25);
     }
 
-    .box {
-      max-width: 850px;
-      background: rgba(255,255,255,0.08);
-      padding: 45px;
-      border-radius: 28px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-
-    .badge {
-      display: inline-block;
-      background: #facc15;
-      color: #111827;
-      padding: 8px 16px;
+    .nav-pill {
+      padding: 10px 16px;
       border-radius: 999px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: 44px;
-      margin: 10px 0;
-    }
-
-    p {
-      font-size: 19px;
-      line-height: 1.7;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       color: #e2e8f0;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-top: 30px;
-    }
-
-    .feature {
-      background: rgba(255,255,255,0.1);
-      padding: 18px;
-      border-radius: 18px;
-      font-size: 16px;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 35px;
-      background: #22c55e;
-      color: white;
-      text-decoration: none;
-      padding: 16px 28px;
-      border-radius: 16px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .btn:hover {
-      background: #16a34a;
-    }
-
-    .note {
-      margin-top: 18px;
       font-size: 14px;
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 45px 22px 80px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .discount {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(250, 204, 21, 0.13);
+      border: 1px solid rgba(250, 204, 21, 0.35);
+      color: #fde68a;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 0.98;
+      margin: 0;
+      letter-spacing: -2.5px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #38bdf8, #a78bfa, #facc15);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      margin: 24px 0 0;
+      font-size: 20px;
+      line-height: 1.75;
       color: #cbd5e1;
+      max-width: 690px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 17px 26px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-weight: 800;
+      font-size: 17px;
+      box-shadow: 0 18px 38px rgba(34, 197, 94, 0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 48px rgba(34, 197, 94, 0.36);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 22px;
+      border-radius: 18px;
+      color: #e2e8f0;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(12px);
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mockup-wrap {
+      position: relative;
+    }
+
+    .glow {
+      position: absolute;
+      inset: 30px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(168, 85, 247, 0.35));
+      filter: blur(55px);
+      opacity: 0.9;
+    }
+
+    .app-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 32px;
+      padding: 22px;
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.38);
+      backdrop-filter: blur(20px);
+    }
+
+    .app-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .ai-badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.14);
+      color: #86efac;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .screen {
+      background: #f8fafc;
+      color: #0f172a;
+      border-radius: 24px;
+      padding: 22px;
+    }
+
+    .screen-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .screen-title {
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .score {
+      background: #dcfce7;
+      color: #166534;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .question-box {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .question-label {
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .question-text {
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.55;
+    }
+
+    .options {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .option.correct {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .ai-explain {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 16px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 14px;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .section {
+      padding: 80px 22px;
+      background: #f8fafc;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(30px, 4vw, 46px);
+      margin: 0 0 14px;
+      letter-spacing: -1.3px;
+      color: #0f172a;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 42px;
+      color: #64748b;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .feature-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 26px;
+      padding: 24px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #e0f2fe, #ede9fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #0f172a;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: #64748b;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .download-section {
+      padding: 80px 22px;
+      background: #0f172a;
+      color: white;
+    }
+
+    .download-box {
+      max-width: 940px;
+      margin: 0 auto;
+      text-align: center;
+      border-radius: 34px;
+      padding: 48px 28px;
+      background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.25), transparent 35%),
+        linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.25);
+    }
+
+    .download-box h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      letter-spacing: -1.2px;
+    }
+
+    .download-box p {
+      color: #cbd5e1;
+      font-size: 18px;
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 18px auto 0;
+    }
+
+    .download-note {
+      margin-top: 18px;
+      color: #94a3b8;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .footer {
+      background: #020617;
+      color: #94a3b8;
+      padding: 26px 22px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 25px;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .mockup-wrap {
+        max-width: 560px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .navbar {
+        padding: 18px 16px;
+      }
+
+      .brand {
+        font-size: 19px;
+      }
+
+      .nav-pill {
+        display: none;
+      }
+
+      .hero {
+        padding: 28px 16px 58px;
+      }
+
+      .subtitle {
+        font-size: 17px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+      }
+
+      .app-card {
+        border-radius: 24px;
+        padding: 14px;
+      }
+
+      .screen {
+        padding: 16px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 58px 16px;
+      }
+
+      .download-section {
+        padding: 58px 16px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <section class="hero">
-    <div class="box">
-      <div class="badge">75% Special Discount Available</div>
+  <main>
+    <section class="page">
+      <nav class="navbar">
+        <div class="brand">
+          <div class="logo">
+  <img src="guru1.png" alt="GuruExam Logo" />
+</div>
+          <span>GuruExam</span>
+        </div>
 
-      <h1>GuruExam</h1>
+        <div class="nav-pill">
+          Sinhala Guru Exam Training App
+        </div>
+      </nav>
 
-      <p>
-        ශ්‍රී ලංකා ගුරු විභාගයට සූදානම් වන ඔබට GK සහ IQ සඳහා
-        Sinhala MCQ, AI explanations, targeted practice සහ exam-style questions
-        ලබාදෙන Windows application එක.
-      </p>
+      <div class="hero">
+        <div>
+          <div class="discount">
+            🎓 75% Special Discount Available
+          </div>
 
-      <div class="features">
-        <div class="feature">✅ Sinhala GK & IQ MCQs</div>
-        <div class="feature">✅ AI Answer Explanations</div>
-        <div class="feature">✅ Real Exam-Style Practice</div>
-        <div class="feature">✅ Windows Laptop/Desktop Support</div>
+          <h1>
+            Pass වෙන්න <span class="gradient-text">Smart විදිහට</span> Prepare වෙන්න
+          </h1>
+
+          <p class="subtitle">
+            ශ්‍රී ලංකා ගුරු විභාගයට සූදානම් වන ඔබට GK සහ IQ සඳහා
+            Sinhala MCQ, AI explanations, targeted practice සහ exam-style questions
+            ලබාදෙන modern Windows application එක.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn-primary" href="https://github.com/GuruExam-LK/guruexam-download/releases/download/v1.0.0/GuruExam_Setup_v1.0.0.exe">
+              ⬇ Download GuruExam App
+            </a>
+
+            <a class="btn-secondary" href="#features">
+              View Features
+            </a>
+          </div>
+
+          <div class="trust-row">
+            <div class="trust-item">✅ Windows Laptop/Desktop</div>
+            <div class="trust-item">✅ Sinhala MCQs</div>
+            <div class="trust-item">✅ GK + IQ Practice</div>
+          </div>
+        </div>
+
+        <div class="mockup-wrap">
+          <div class="glow"></div>
+
+          <div class="app-card">
+            <div class="app-top">
+              <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
+              <div class="ai-badge">AI Powered</div>
+            </div>
+
+            <div class="screen">
+              <div class="screen-header">
+                <div class="screen-title">GuruExam Practice</div>
+                <div class="score">GK + IQ</div>
+              </div>
+
+              <div class="question-box">
+                <div class="question-label">EXAM STYLE QUESTION</div>
+
+                <div class="question-text">
+                  ශ්‍රී ලංකාවේ රාජ්‍ය පාලනය සහ සාමාන්‍ය දැනුම පිළිබඳ ප්‍රශ්න සඳහා ඉලක්කගත පුහුණුව.
+                </div>
+
+                <div class="options">
+                  <div class="option">A. General Knowledge</div>
+                  <div class="option correct">B. Correct answer with explanation</div>
+                  <div class="option">C. IQ Practice</div>
+                  <div class="option">D. Exam Preparation</div>
+                </div>
+
+                <div class="ai-explain">
+                  AI explanation මඟින් answer එක මතක තබාගන්න සහ logic එක තේරුම් ගන්න පහසු වේ.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
+    
+    <section class="section" id="features">
+      <div class="container">
+        <h2 class="section-title">Why GuruExam?</h2>
 
-      <a class="btn" href="https://github.com/GuruExam-LK/guruexam-download/releases/download/v1.0.0/GuruExam_Setup_v1.0.0.exe">
-        Download GuruExam App
-      </a>
+        <p class="section-subtitle">
+          විභාගයට කලින් අනිවාර්යයෙන්ම practice කළ යුතු GK සහ IQ ප්‍රශ්න
+          සිංහලෙන්, සරලව, exam-focused ආකාරයට.
+        </p>
 
-      <div class="note">
-        Download page එක open වුණාට පස්සේ Assets යටතේ තියෙන GuruExam_Setup.exe file එක download කරන්න.
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="icon">📚</div>
+            <h3>Sinhala MCQs</h3>
+            <p>
+              ගුරු විභාගයට ගැළපෙන Sinhala multiple choice questions.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">🧠</div>
+            <h3>GK + IQ</h3>
+            <p>
+              General Knowledge සහ IQ දෙකම එකම app එකකින් practice කරන්න.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">🤖</div>
+            <h3>AI Explanations</h3>
+            <p>
+              පිළිතුර පමණක් නොව, හේතුවත් තේරුම් ගන්න පහසු explanations.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">🎯</div>
+            <h3>Targeted Practice</h3>
+            <p>
+              Exam-style questions මඟින් ඔබේ preparation එක වැඩි දියුණු කරන්න.
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="download-section">
+      <div class="download-box">
+        <h2>Download GuruExam Windows App</h2>
+
+        <p>
+          Windows laptop හෝ desktop එකට install කරලා Guru Exam preparation එක අදම ආරම්භ කරන්න.
+        </p>
+
+        <a class="btn-primary" href="https://github.com/GuruExam-LK/guruexam-download/releases/download/v1.0.0/GuruExam_Setup_v1.0.0.exe">
+          ⬇ Download Installer
+        </a>
+
+        <div class="download-note">
+          Button එක click කළාට පස්සේ <b>GuruExam_Setup_v1.0.0.exe</b> file එක download වේ.
+          Windows warning එකක් ආවොත් <b>More info → Run anyway</b> click කරන්න.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © 2026 GuruExam. Sinhala Guru Exam Training Application.
+  </footer>
 </body>
 </html>
